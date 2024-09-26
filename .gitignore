@@ -1,0 +1,73 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+env/
+venv/
+ENV/
+.venv/
+*.env
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+.cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# PyCharm project files
+.idea/
+
+# VSCode settings
+.vscode/
+
+# macOS files
+.DS_Store
+
+# mypy type checker reports
+.mypy_cache/
+.dmypy.json
+
+# Pylint reports
+.pylint.d/
+
+# Pyre type checker
+.pyre/
+
+# Bandit security reports
+.bandit/
+
+# Flask / Django files
+instance/
+
+# FastAPI log files
+*.log
+
+# Static files and media (if using static/media folder with FastAPI)
+static/
+media/
+
+# Uvicorn logs (if applicable)
+uvicorn.log
+
+# models
+models
