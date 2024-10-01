@@ -1,33 +1,16 @@
-from typing import Union
-
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from .dependencies import load_llama_model
 
-app = FastAPI()
+from .routers import model, chat
 
-import torch
-import transformers
-from transformers import AutoTokenizer
 
-model = "codellama/CodeLlama-7b-hf"
+@asynccontextmanager
+async def initialize_llama_model(app: FastAPI):
+    load_llama_model()
+    yield
 
-tokenizer = AutoTokenizer.from_pretrained(model)
-pipeline = transformers.pipeline(
-    "text-generation",
-    model=model,
-    torch_dtype=torch.float16,
-    device_map="auto",
-)
+app = FastAPI(lifespan=initialize_llama_model)
 
-sequences = pipeline(
-    "import socket\n\ndef ping_exponential_backoff(host: str):",
-    do_sample=True,
-    top_k=10,
-    temperature=0.1,
-    top_p=0.95,
-    num_return_sequences=1,
-    eos_token_id=tokenizer.eos_token_id,
-    max_length=200,
-)
-
-for seq in sequences:
-    print(f"Result: {seq['generated_text']}")
+app.include_router(model.router)
+app.include_router(chat.router)

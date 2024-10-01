@@ -7,11 +7,9 @@ Authentication: Include authentication details when necessary, such as bearer to
 Format Response: Provide well-structured JSON payloads that follow Kubernetes resource specifications for the relevant API actions (e.g., POST, GET, PATCH).
 """
 
-
-def load_model():
-
+def initialize_llama_model() -> Llama:
     llm = Llama(
-        model_path="./models/llama-2-7b-chat.Q4_0.gguf",
+        model_path="./llm-models/llama-2-7b-chat.Q4_0.gguf",
         n_gpu_layers=-1,  # Uncomment to use GPU acceleration
         verbose=False,
     )
@@ -25,19 +23,12 @@ def load_model():
         },
         temperature=0.7,
     )
+    print("Llama model initialized")
+    return llm
 
-    output = llm(
-        "Q: List all pods A: ",  # Prompt
-        max_tokens=None,  # Generate up to 32 tokens, set to None to generate up to the end of the context window
-        stop=[
-            "Q:",
-            "\n",
-        ],  # Stop generating just before the model would generate a new question
-        echo=True,  # Echo the prompt back in the output
-    )  # Generate a completion, can also call create_completion
+chat_model = None
 
-    print(output)
-    return
+def load_llama_model():
+    global chat_model
+    chat_model = initialize_llama_model()
 
-
-load_model()

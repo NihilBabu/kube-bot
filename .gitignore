@@ -70,4 +70,4 @@ media/
 uvicorn.log
 
 # models
-models
+llm-models
